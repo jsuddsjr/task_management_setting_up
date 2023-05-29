@@ -1,11 +1,10 @@
 const express = require('express');
-const db = require('../models/index');
-const User = db.sequelize.models.User;
+const db = require('../models');
 const router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-	return User.findAll({
+	return db.User.findAll({
 		raw: true
 	})
 	.then(function(result){

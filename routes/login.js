@@ -1,5 +1,5 @@
 const express = require('express');
-const passport = require('../controllers/login.js');
+const passport = require('../middlewares/passport.js');
 
 const router = express.Router();
 

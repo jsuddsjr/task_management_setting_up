@@ -1,9 +1,9 @@
-<% include _head.ejs %>
+<%- include('head.ejs') %>
 
-    <h1>
-        <%= message %>
-    </h1>
-    <h2>
-        <%= error.status %>
-    </h2>
-    <pre><%= error.stack %></pre>
+<main class="container">
+  <h1><%- message %></h1>
+  <h2><%= error.status %></h2>
+  <pre><%= error.stack %></pre>
+</main>
+
+<%- include('footer.ejs') %>

@@ -11,11 +11,10 @@ const authenticateOptions = {
 
 /* GET Login Index page. */
 router.get('/', function(_req, res) {
-    res.render('login');
+    res.render('login', {title: 'Log in'});
 });
 
 /* POST Validate the user login */
 router.post('/validate', passport.authenticate('local', authenticateOptions));
-router.post('/validate/linkedin', passport.authenticate('linkedin', authenticateOptions));
 
 module.exports = router;

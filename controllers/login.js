@@ -3,7 +3,6 @@ const Local = require('passport-local').Strategy;
 const LinkedIn = require('passport-linkedin-oauth2').Strategy;
 const bcrypt = require('bcrypt');
 const db = require('../models');
-const { Op } = require('sequelize');
 
 require('dotenv').config();
 
@@ -14,26 +13,30 @@ passport.use(new LinkedIn({
     scope: ['r_emailaddress', 'r_liteprofile'],
 },
 /** @type {import('passport-linkedin-oauth2').VerifyFunction} */
-async (accessToken, refreshToken, profile, done) => {
+async (accessToken, _refreshToken, profile, done) => {
     try {
         const model = await db.User.findOne({
-            where: { email: [Op.in, profile.emails.map(o => o.value) ] }
+            where: { email: profile.emails.map(o => o.value) }
         });
 
-        if (!model) {
-            return done('Email not registered.', false);
+        /** @type {import('../models/user').User} */
+        let user;
+
+        if (model) {
+            user = model.get();
+        } else {
+            // TODO: We add the user to our database here.
+            user = {
+                firstName: profile.name.givenName,
+                lastName: profile.name.familyName,
+                email: profile.emails[0].value,
+                role: 3
+            };
+            const result = await db.User.create(user);
+            if (!result) done('Unable to create user.', false);
         }
 
-        const user = model.get();
         user.accessToken = accessToken;
-        user.refreshToken = refreshToken;
-
-        const result = await model.save({
-            fields: ['accessToken', 'refreshToken']}
-        );
-        if (!result) {
-            return done('Failed to save tokens in session.', false);
-        }
 
         done(null, user);
     } catch(err) {

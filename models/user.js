@@ -9,8 +9,6 @@ const Sequelize = require('sequelize');
  * @property {string} lastName
  * @property {string} email
  * @property {string} password
- * @property {string} accessToken
- * @property {string} refreshToken
  * @property {number} role
 */
 
@@ -25,8 +23,6 @@ module.exports = (sequelize, DataTypes = Sequelize.DataTypes) => {
         lastName: DataTypes.STRING,
         email: { type: DataTypes.STRING, unique: true },
         password: DataTypes.STRING,
-        accessToken: DataTypes.STRING,
-        refreshToken: DataTypes.STRING,
         role: DataTypes.INTEGER
     }, {
         sequelize

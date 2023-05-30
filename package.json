@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "set DEBUG=express:* & nodemon ./bin/www"
+    "start": "set DEBUG=express:* & nodemon ./bin/www",
+    "migration:generate": "sequelize-cli migration:generate --name migration",
+    "db:migrate": "sequelize-cli db:migrate"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

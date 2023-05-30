@@ -1,14 +1,35 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.INTEGER
-  }, {});
-  User.associate = function(models) {
-    // associations can be defined here
-  };
-  return User;
+
+const Sequelize = require('sequelize');
+
+/**
+ * @typedef {Object} User
+ * @property {number} id
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} email
+ * @property {string} password
+ * @property {string} accessToken
+ * @property {string} refreshToken
+ * @property {number} role
+*/
+
+/**
+ * Create User model.
+ * @param {Sequelize} sequelize A connected DB
+ * @returns {Sequelize.Model<User>}
+ */
+module.exports = (sequelize, DataTypes = Sequelize.DataTypes) => {
+    const User = sequelize.define('User', {
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
+        email: { type: DataTypes.STRING, unique: true },
+        password: DataTypes.STRING,
+        accessToken: DataTypes.STRING,
+        refreshToken: DataTypes.STRING,
+        role: DataTypes.INTEGER
+    }, {
+        sequelize
+    });
+    return User;
 };

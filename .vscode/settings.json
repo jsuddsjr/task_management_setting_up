@@ -1,8 +1,12 @@
 {
     "cSpell.words": [
+        "emailaddress",
         "linebreak",
+        "liteprofile",
         "middlewares",
+        "resave",
         "signin",
-        "taskmanagement"
+        "taskmanagement",
+        "userrole"
     ]
 }
